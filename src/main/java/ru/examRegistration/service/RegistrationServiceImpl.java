@@ -2,6 +2,8 @@ package ru.examRegistration.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.examRegistration.dto.StudentDto;
+import ru.examRegistration.exception.ResourceNotFoundException;
 import ru.examRegistration.model.Student;
 import ru.examRegistration.repository.StudentRepository;
 
@@ -19,17 +21,24 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public Student getStudentById(Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Student not exist with id: " + id));
     }
 
     @Override
-    public void createNewStudent(Student student) {
+    public void createNewStudent(StudentDto dto) {
+        Student student = dto.toStudent();
         repository.save(student);
     }
 
     @Override
-    public void updateStudent(Student student) {
-        repository.save(student);
+    public void updateStudent(long id, StudentDto dto) {
+        Student updateStudent = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Student not exist with id: " + id));
+        updateStudent.setFirstName(dto.getFirstName());
+        updateStudent.setLastName(dto.getLastName());
+        updateStudent.setBirthDate(dto.getBirthDate());
+        updateStudent.setStep(dto.getStep());
+        updateStudent.setExams(dto.getExams());
+        repository.save(updateStudent);
     }
 
     @Override

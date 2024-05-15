@@ -1,25 +1,27 @@
 package ru.examRegistration.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
-@Table(name = "STUDENT")
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Student {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String firstName;
     private String lastName;
-//    private Date birthDate;
+    private LocalDate birthDate;
     private int step;
-    @ElementCollection
     private List<Exam> exams;
 }

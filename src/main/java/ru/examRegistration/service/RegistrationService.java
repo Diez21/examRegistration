@@ -1,5 +1,6 @@
 package ru.examRegistration.service;
 
+import ru.examRegistration.dto.StudentDto;
 import ru.examRegistration.model.Student;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface RegistrationService {
 
     Student getStudentById(Long id);
 
-    void createNewStudent(Student student);
+    void createNewStudent(StudentDto dto);
 
-    void updateStudent(Student student);
+    void updateStudent(long id, StudentDto dto);
 
     void deleteStudent(Long id);
 }
