@@ -17,11 +17,19 @@ import ru.examRegistration.service.RegistrationServiceImpl;
 
 import java.util.List;
 
-@RestController("/api")
+/**
+ * Контроллер приложения регистрации студентов со списком их экзаменов
+ */
+@RestController("/app")
 public class RegistrationController {
+    /**Поле с сервисом регистрации студентов*/
     @Autowired
     RegistrationServiceImpl service;
 
+    /**
+     * Получить информацию по всем зарегистрированным студентам
+     * @return возвращыет ResponseEntity со статусом 204 или 200
+     */
     @GetMapping("/allStudents")
     public ResponseEntity<List<StudentDto>> getAllStudents() {
         List<Student> students = service.getAllStudents();
@@ -29,12 +37,23 @@ public class RegistrationController {
         return students.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(studentDto, HttpStatus.OK);
     }
 
+    /**
+     * Получить информацию по конкретному студенту используя его id
+     * @param id - индентификацонный номер судента
+     * @return ResponseEntity с информацией по студенту в теле сообщения и статусом 200 либо ResponseEntity со статусом 404
+     */
     @GetMapping("/student/{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
         Student student = service.getStudentById(id);
         return student != null ? new ResponseEntity<>(StudentDto.fromStudent(student), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Добавление нового студента
+     * @param dto - тело сообщения с описанием полей нового студента
+     * @return возвращает ResponseEntity со статусом 201
+     * @throws BadRequestException исключение пробрасывается в случае не корректных данных от пользователя
+     */
     @PostMapping("/student")
     public ResponseEntity<Object> createNewStudent(@RequestBody StudentDto dto) throws BadRequestException {
         checkDto(dto);
@@ -42,6 +61,13 @@ public class RegistrationController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * Обновить информацию по существующему пользователю
+     * @param id - индентификацонный номер существующего судента
+     * @param dto - новая информация по студенту
+     * @return ResponseEntity новой информацией по студенту и статусом 200
+     * @throws BadRequestException исключение пробрасывается в случае не корректных данных от пользователя
+     */
     @PutMapping("/student/{id}")
     public ResponseEntity<StudentDto> updateStudent(@PathVariable long id, @RequestBody StudentDto dto) throws BadRequestException {
         if (id <= 0) {
@@ -53,6 +79,11 @@ public class RegistrationController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    /**
+     * Удалить пользователя по его id
+     * @param id - индентификацонный номер существующего судента
+     * @return ResponseEntity информацией по удалению
+     */
     @DeleteMapping("/student/{id}")
     public ResponseEntity<String> deleteStudentById(@PathVariable Long id) {
         service.deleteStudent(id);
