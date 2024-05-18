@@ -1,10 +1,9 @@
-package ru.examRegistration.model;
+package ru.studentRegistration.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 import java.time.LocalDate;
@@ -13,8 +12,7 @@ import java.util.List;
 /**
  * Базовый класс студента
  */
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -22,14 +20,25 @@ public class Student {
     @Id
     @GeneratedValue
     private long id;
-    /**Имя*/
+    /**
+     * Имя
+     */
     private String firstName;
-    /**Фамилия*/
+    /**
+     * Фамилия
+     */
     private String lastName;
-    /**Дата рождения*/
-    private LocalDate birthDate;
-    /**Год обучения(Курс)*/
+    /**
+     * Дата рождения
+     */
+    private LocalDate birthDate = LocalDate.now();
+    /**
+     * Год обучения(Курс)
+     */
     private int step;
-    /**Сиписок экзаменов студента*/
+    /**
+     * Сиписок экзаменов студента
+     */
+    @ElementCollection
     private List<Exam> exams;
 }

@@ -1,4 +1,4 @@
-package ru.examRegistration.exception;
+package ru.studentRegistration.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

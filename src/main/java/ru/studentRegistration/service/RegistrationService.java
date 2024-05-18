@@ -1,7 +1,7 @@
-package ru.examRegistration.service;
+package ru.studentRegistration.service;
 
-import ru.examRegistration.dto.StudentDto;
-import ru.examRegistration.model.Student;
+import ru.studentRegistration.model.Student;
+import ru.studentRegistration.dto.StudentDto;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface RegistrationService {
      * Получить информацию по всем зарегистрированным студентам
      * @return List<Student> список судентов
      */
-    List<Student> getAllStudents();
+    List<Student> getStudents();
 
     /**
      *Получить информацию по конкретному студенту, используя его id
@@ -26,14 +26,14 @@ public interface RegistrationService {
      * Добавить нового студента
      * @param dto информация по новому студенту
      */
-    void createNewStudent(StudentDto dto);
+    Student createNewStudent(StudentDto dto);
 
     /**
      * Обновить информацию по студенту, используя его id
      * @param id - индентификацонный номер существующего судента
      * @param dto - новая информация о студенте
      */
-    void updateStudent(long id, StudentDto dto);
+    Student updateStudent(long id, StudentDto dto);
 
     /**
      * Удалить существующего студента, используя его id

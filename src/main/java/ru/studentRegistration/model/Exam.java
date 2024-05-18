@@ -1,4 +1,4 @@
-package ru.examRegistration.model;
+package ru.studentRegistration.model;
 
 /**
  * ВОзможные типы экзаменов
