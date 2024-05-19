@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.studentRegistration.dto.StudentDto;
 import ru.studentRegistration.model.Student;
@@ -33,9 +34,9 @@ public class RegistrationController {
     }
 
     @GetMapping("/students")
-    public ResponseEntity<List<StudentDto>> getStudents() {
-        List<Student> students = service.getStudents();
-        List<StudentDto> studentsDto = service.getStudents().stream().map(StudentDto::fromStudent).toList();
+    public ResponseEntity<List<StudentDto>> getStudents(@RequestParam @Min(1) Long size) {
+        List<Student> students = service.getStudents(size);
+        List<StudentDto> studentsDto = students.stream().map(StudentDto::fromStudent).toList();
         return students.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(studentsDto, HttpStatus.OK);
     }
 

@@ -24,8 +24,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public List<Student> getStudents() {
-        return repository.findAll();
+    public List<Student> getStudents(Long size) {
+        return repository.findAll().subList(0, size.intValue());
     }
 
     @Override

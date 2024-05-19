@@ -13,7 +13,7 @@ public interface RegistrationService {
      * Получить информацию по всем зарегистрированным студентам
      * @return List<Student> список судентов
      */
-    List<Student> getStudents();
+    List<Student> getStudents(Long size);
 
     /**
      *Получить информацию по конкретному студенту, используя его id

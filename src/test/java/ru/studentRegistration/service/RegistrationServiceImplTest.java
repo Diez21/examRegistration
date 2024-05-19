@@ -45,7 +45,7 @@ class RegistrationServiceImplTest {
     void getStudents() {
         List<Student> expected = List.of(student);
         given(repository.findAll()).willReturn(expected);
-        List<Student> actual = service.getStudents();
+        List<Student> actual = service.getStudents(1L);
         Assertions.assertIterableEquals(expected, actual);
     }
 
