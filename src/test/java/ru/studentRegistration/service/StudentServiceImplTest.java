@@ -23,11 +23,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class RegistrationServiceImplTest {
+class StudentServiceImplTest {
     @Mock
     private StudentRepository repository;
     @InjectMocks
-    private RegistrationServiceImpl service;
+    private StudentServiceImpl service;
 
     private Student student;
 
@@ -45,7 +45,7 @@ class RegistrationServiceImplTest {
     void getStudents() {
         List<Student> expected = List.of(student);
         given(repository.findAll()).willReturn(expected);
-        List<Student> actual = service.getStudents(1L);
+        List<Student> actual = service.getStudents(0, 1);
         Assertions.assertIterableEquals(expected, actual);
     }
 

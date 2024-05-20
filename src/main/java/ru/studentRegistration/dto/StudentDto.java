@@ -1,6 +1,7 @@
 package ru.studentRegistration.dto;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -16,14 +17,34 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentDto {
     private long id;
+    /**
+     * Имя
+     */
     @Size(min = 2, message = "user name should have at least 2 characters")
+    @NotBlank
+    @NotNull
     private String firstName;
+    /**
+     * Фамилия
+     */
     @Size(min = 2, message = "user name should have at least 2 characters")
+    @NotBlank
+    @NotNull
     private String lastName;
+    /**
+     * Дата рождения
+     */
     @Past
+    @NotNull
     private LocalDate birthDate;
+    /**
+     * Год обучения(Курс)
+     */
     @Min(1)
     private int step;
+    /**
+     * Сиписок экзаменов студента
+     */
     @NotNull
     private List<Exam> exams;
 

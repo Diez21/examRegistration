@@ -2,7 +2,6 @@ package ru.studentRegistration.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.studentRegistration.dto.StudentDto;
@@ -13,19 +12,18 @@ import ru.studentRegistration.repository.StudentRepository;
 import java.util.List;
 
 @Service
-public class RegistrationServiceImpl implements RegistrationService {
+public class StudentServiceImpl implements StudentService {
     private final Logger logger = LoggerFactory.getLogger(
-            RegistrationServiceImpl.class);
+            StudentServiceImpl.class);
     private final StudentRepository repository;
 
-    @Autowired
-    public RegistrationServiceImpl(StudentRepository repository) {
+    public StudentServiceImpl(StudentRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public List<Student> getStudents(Long size) {
-        return repository.findAll().subList(0, size.intValue());
+    public List<Student> getStudents(Integer skip, Integer size) {
+        return repository.findAll().subList(skip, size);
     }
 
     @Override

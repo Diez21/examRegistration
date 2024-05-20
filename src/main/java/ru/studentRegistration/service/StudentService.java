@@ -8,12 +8,12 @@ import java.util.List;
 /**
  * Сервис для обработки поступающих от контроллера запросов
  */
-public interface RegistrationService {
+public interface StudentService {
     /**
      * Получить информацию по всем зарегистрированным студентам
      * @return List<Student> список судентов
      */
-    List<Student> getStudents(Long size);
+    List<Student> getStudents(Integer skip, Integer size);
 
     /**
      *Получить информацию по конкретному студенту, используя его id

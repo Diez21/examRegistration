@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.studentRegistration.dto.StudentDto;
 import ru.studentRegistration.model.Student;
-import ru.studentRegistration.service.RegistrationService;
+import ru.studentRegistration.service.StudentService;
 
 import java.util.List;
 
@@ -24,18 +25,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-public class RegistrationController {
+public class StudentController {
 
-    private final RegistrationService service;
+    private final StudentService service;
 
     @Autowired
-    public RegistrationController(RegistrationService service) {
+    public StudentController(StudentService service) {
         this.service = service;
     }
 
     @GetMapping("/students")
-    public ResponseEntity<List<StudentDto>> getStudents(@RequestParam @Min(1) Long size) {
-        List<Student> students = service.getStudents(size);
+    public ResponseEntity<List<StudentDto>> getStudents(@RequestParam @Min(0) Integer skip, @RequestParam @Min(1) Integer size) {
+        List<Student> students = service.getStudents(skip, size);
         List<StudentDto> studentsDto = students.stream().map(StudentDto::fromStudent).toList();
         return students.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(studentsDto, HttpStatus.OK);
     }
@@ -47,9 +48,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<StudentDto> createNewStudent(@RequestBody StudentDto dto) {
-        StudentDto response = StudentDto.fromStudent(service.createNewStudent(dto));
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNewStudent(@RequestBody StudentDto dto) {
+        StudentDto.fromStudent(service.createNewStudent(dto));
     }
 
     @PutMapping("/students/{id}")
@@ -60,8 +61,8 @@ public class RegistrationController {
     }
 
     @DeleteMapping("/students/{id}")
-    public ResponseEntity<String> deleteStudentById(@PathVariable @Min(1) Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStudentById(@PathVariable @Min(1) Long id) {
         service.deleteStudent(id);
-        return new ResponseEntity<>("Студент с id " + id + " успешно удален", HttpStatus.OK);
     }
 }
